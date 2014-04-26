@@ -15,7 +15,8 @@
       <div class="nav-bar right">
        <ul class="button-group">
          <li><a id="btnStart" href="#" class="button">Démarer les requêtes</a></li>
-        </ul>
+         <li><a id="btnStop" href="#" class="button">Arrêter</a></li>
+	</ul>
       </div>
       <h1>Démo concurence<small>Des recherches massives</small></h1>
       <hr />
@@ -31,41 +32,42 @@
  
     <!-- Main Blog Content -->
     <div class="large-9 columns" role="content">
- 
+        <h3><a href="#">Liste des utilisateurs bidon</a></h3> 
       <article>
  
-        <h3><a href="#">Liste des utilisateurs bidon</a></h3>
+	
 	<div class="row"> 	
 	<div class="small-2 columns text-center">
 	<img src="img/user.png"></img>
-	<p>5 ms</p>
+	<p id="worker1"></p>
 	</div>
 
 	<div class="small-2 columns text-center">
         <img src="img/user.png"></img>    
-        <p>5 ms</p> 
+        <p id="worker2"></p> 
         </div>
 
 <div class="small-2 columns text-center">
         <img src="img/user.png"></img>
-        <p>5 ms</p>
+        <p id="worker3"></p>
         </div>
 
 <div class="small-2 columns text-center">
         <img src="img/user.png"></img>
-        <p>5 ms</p>
+        <p id="worker4"></p>
         </div>
 
 <div class="small-2 columns text-center">
         <img src="img/user.png"></img>
-        <p>5 ms</p>
+        <p id="worker5"></p>
         </div>
 
 <div class="small-2 columns text-center">
         <img src="img/user.png"></img>
-        <p>5 ms</p>
+        <p id="worker6"></p>
         </div>
 	</div> 
+
       </article> 
     </div>
  
@@ -96,11 +98,28 @@
 
 <!-- Code du demo !!! -->
 	<script>
+	var runInterval;
 		<!-- Event de démarage des threads !!! -->
 		$( "#btnStart" ).click(function() {
 			//startWebWorker();
+			runStatus = true;
 			startEventedWebWorker();
 		});
+
+		$("#btnStop").click(function() {
+			window.clearInterval(runInterval);
+		});
+
+		function generateDomClientBidon() {
+				
+
+
+		for (var i = 0; i < 9; i++) {
+
+		
+			}
+
+		}
 
 
 		function startEventedWebWorker(){
@@ -109,13 +128,14 @@
 		var worker = new Worker('worker_event.js');
 		
 		worker.addEventListener('message', function(e) {
-		  console.log('temp execution: ', e.data);
-		//  document.getElementById("worker").textContent = e.data;
+		 // console.log('temp execution: ', e.data);
+		  document.getElementById("worker1").textContent = e.data + "ms";
 		}, false);
-
+		
+		runInterval = setInterval(function() {
 		worker.postMessage('http://cirq.codingrhemes.com:9200/_search'); // Send filename to our worker.
-
-	};
+			}, 5000);
+		};
 
 	</script>
   </body>
