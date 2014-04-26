@@ -96,41 +96,14 @@
 
 <!-- Code du demo !!! -->
 	<script>
-		function doWork() {
-	var ajaxTime = new Date().getTime();
-	var data = {
-      size: 1, // get 1 results
-      q: 'arc'
-    };
-    $.ajax({
-      url: 'http://cirq.codingrhemes.com:9200/_search',
-      dataType: 'jsonp',
-      success: function(data) {
-		var totalTime = new Date().getTime()-ajaxTime;
-        console.log('Temps execution ' + totalTime);
-     			 }
-    			});
-		}
-		
+		<!-- Event de démarage des threads !!! -->
 		$( "#btnStart" ).click(function() {
 			//startWebWorker();
 			startEventedWebWorker();
 		});
 
 
-	function startWebWorker() {
-		var worker = new Worker("worker.js");
- 
-		// Watch for messages from the worker
-		worker.onmessage = function(e){
-		  // The message from the client:
-			  console.log('message from thread : ' + e.data);
-		};
- 
-		worker.postMessage("start");
-		}
-
-	function startEventedWebWorker(){
+		function startEventedWebWorker(){
 		//HTML5 Web Workers
 
 		var worker = new Worker('worker_event.js');
