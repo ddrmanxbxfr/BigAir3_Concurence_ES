@@ -1,30 +1,24 @@
 
 self.addEventListener('message', function(e) {
+var strSplit = e.data.split(",");
 
-  
-
-  fetch(e.data, function(xhr) {	
+  fetch(strSplit[1], function(xhr) {	
 
 		var result = xhr.responseText;
 
 		//process the JSON
 
 		var object = JSON.parse(result);
-		var objectToReturn = object.took;		
+		var objectToReturn = strSplit[0] + "," + object.took;
 
 		//set a timeout just to add some latency
 		setTimeout(function() { sendback(); }, 1000);
 
 		//pass JSON object back as string
 		function sendback(){
-			self.postMessage(JSON.stringify(objectToReturn));
-
+			self.postMessage(objectToReturn);
 		}
-
   });
-
-
-
 }, false);
 
 

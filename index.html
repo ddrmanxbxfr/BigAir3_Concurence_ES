@@ -60,6 +60,12 @@
     <script src="js/foundation.min.js"></script>
     <script>
       $(document).foundation();
+
+// Exécuter la génération des DOM
+                window.onload = function(){
+                generateDomClientBidon();
+	}
+
     </script>
 
 <!-- Code du demo !!! -->
@@ -85,13 +91,15 @@
 			nbWorker = nbWorker + 1;
 			var cls1 = document.createElement("div");
 			cls1.className="small-2 columns text-center";
-			row.appendChild(cls1);
 			var img = document.createElement("img");
 			img.src="img/user.png";
-			cls1.appendChild(img);
 			var p = document.createElement("p");
 			p.id ="worker" + nbWorker;
+
+			cls1.appendChild(img);
 			cls1.appendChild(p);
+			row.appendChild(cls1);
+
 		}
 		domUsers.appendChild(row);
 			}
@@ -106,13 +114,14 @@
 		//HTML5 Web Workers
 		workers = new Array();
 		//dom.workers.maxPerDomain = 100; NOTE FONCTIONNE UNIQUEMENT DANS FIREFOX!!
-		for (rCpt = 1; rCpt <= nbWorker; rCpt++) {
+		for (rCpt = 0; rCpt < nbWorker; rCpt++) {
 			var worker = new Worker('worker_event.js');
-		
 			worker.addEventListener('message', function(e) {
-			//  console.log('temp execution: ', e.data);
-				var txtId = "worker" + rCpt;
-			  document.getElementById(txtId).textContent = e.data + "ms";
+				var strSplit = e.data.split(",");
+				var constW = "worker";
+				noWorker = constW.concat(strSplit[0]);
+			 	var par = document.getElementById(noWorker);
+				par.innerHTML = strSplit[1] + "ms";
 			}, false);
 			
 			workers.push(worker); // Ajoute le worker à l'array.
@@ -122,15 +131,14 @@
 			//}, 5000);
 			//};
 		}
+
+
 		//alert('nombre de workers : ' + workers.length);
-		
-		for (rCpt =1; rCpt <= nbWorker; rCpt++) {
-			workers[rCpt].postMessage('http://cirq.codingrhemes.com:9200/_search');
+		for (var q= 0; q < nbWorker; q++) {
+			var item  = workers[q];
+			item.postMessage(q + ',http://cirq.codingrhemes.com:9200/_search');
 			}
 		}
-
-		// Exécuter la génération des DOM
-		generateDomClientBidon();
 	</script>
   </body>
 </html>
