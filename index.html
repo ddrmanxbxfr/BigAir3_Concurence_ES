@@ -68,14 +68,11 @@
 	var nbWorker = 0;
 		<!-- Event de démarage des threads !!! -->
 		$( "#btnStart" ).click(function() {
-			//startWebWorker();
-			runStatus = true;
 			startEventedWebWorker();
 		});
 
 		$("#btnStop").click(function() {
-			generateDomClientBidon();
-			//window.clearInterval(runInterval);
+			window.clearInterval(runInterval);
 		});
 
 		function generateDomClientBidon() {
@@ -102,21 +99,35 @@
 		};
 
 
+		// Array des web workers
+		var workers = new Array();
+
 		function startEventedWebWorker(){
 		//HTML5 Web Workers
-
-		var worker = new Worker('worker_event.js');
+		workers = new Array();
+		//dom.workers.maxPerDomain = 100; NOTE FONCTIONNE UNIQUEMENT DANS FIREFOX!!
+		for (rCpt = 1; rCpt <= nbWorker; rCpt++) {
+			var worker = new Worker('worker_event.js');
 		
-		worker.addEventListener('message', function(e) {
-		 // console.log('temp execution: ', e.data);
-		  document.getElementById("worker1").textContent = e.data + "ms";
-		}, false);
-		
-		runInterval = setInterval(function() {
-		worker.postMessage('http://cirq.codingrhemes.com:9200/_search'); // Send filename to our worker.
-			}, 5000);
-		};
+			worker.addEventListener('message', function(e) {
+			//  console.log('temp execution: ', e.data);
+				var txtId = "worker" + rCpt;
+			  document.getElementById(txtId).textContent = e.data + "ms";
+			}, false);
+			
+			workers.push(worker); // Ajoute le worker à l'array.
 
+			//runInterval = setInterval(function() {
+			//worker.postMessage('http://cirq.codingrhemes.com:9200/_search'); // Send filename to our worker.
+			//}, 5000);
+			//};
+		}
+		//alert('nombre de workers : ' + workers.length);
+		
+		for (rCpt =1; rCpt <= nbWorker; rCpt++) {
+			workers[rCpt].postMessage('http://cirq.codingrhemes.com:9200/_search');
+			}
+		}
 
 		// Exécuter la génération des DOM
 		generateDomClientBidon();
