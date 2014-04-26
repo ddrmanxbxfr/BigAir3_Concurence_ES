@@ -113,7 +113,8 @@
 		}
 		
 		$( "#btnStart" ).click(function() {
-			startWebWorker();
+			//startWebWorker();
+			startEventedWebWorker();
 		});
 
 
@@ -128,6 +129,20 @@
  
 		worker.postMessage("start");
 		}
+
+	function startEventedWebWorker(){
+		//HTML5 Web Workers
+
+		var worker = new Worker('worker_event.js');
+		
+		worker.addEventListener('message', function(e) {
+		  console.log('temp execution: ', e.data);
+		//  document.getElementById("worker").textContent = e.data;
+		}, false);
+
+		worker.postMessage('http://cirq.codingrhemes.com:9200/_search'); // Send filename to our worker.
+
+	};
 
 	</script>
   </body>
