@@ -14,7 +14,7 @@
     <div class="large-12 columns">
       <div class="nav-bar right">
        <ul class="button-group">
-         <li><a href="#" class="button">Démarer les requêtes</a></li>
+         <li><a id="btnStart" href="#" class="button">Démarer les requêtes</a></li>
         </ul>
       </div>
       <h1>Démo concurence<small>Des recherches massives</small></h1>
@@ -93,5 +93,30 @@
     <script>
       $(document).foundation();
     </script>
+
+<!-- Code du demo !!! -->
+	<script>
+		function doWork() {
+	var ajaxTime = new Date().getTime();
+	var data = {
+      size: 1, // get 1 results
+      q: 'arc'
+    };
+    $.ajax({
+      url: 'http://cirq.codingrhemes.com:9200/_search',
+      dataType: 'jsonp',
+      success: function(data) {
+		var totalTime = new Date().getTime()-ajaxTime;
+        console.log('Temps execution ' + totalTime);
+     			 }
+    			});
+		}
+		
+		$( "#btnStart" ).click(function() {
+			doWork();
+		});
+
+	</script
+
   </body>
 </html>
