@@ -18,7 +18,7 @@
          <li><a id="btnStop" href="#" class="button">Arrêter</a></li>
 	</ul>
       </div>
-      <h1>Démo concurence<small>Des recherches massives</small></h1>
+      <h1>Démo concurence <br /><small>Des recherches massives</small></h1>
       <hr />
     </div>
   </div>
@@ -33,41 +33,7 @@
     <!-- Main Blog Content -->
     <div class="large-9 columns" role="content">
         <h3><a href="#">Liste des utilisateurs bidon</a></h3> 
-      <article>
- 
-	
-	<div class="row"> 	
-	<div class="small-2 columns text-center">
-	<img src="img/user.png"></img>
-	<p id="worker1"></p>
-	</div>
-
-	<div class="small-2 columns text-center">
-        <img src="img/user.png"></img>    
-        <p id="worker2"></p> 
-        </div>
-
-<div class="small-2 columns text-center">
-        <img src="img/user.png"></img>
-        <p id="worker3"></p>
-        </div>
-
-<div class="small-2 columns text-center">
-        <img src="img/user.png"></img>
-        <p id="worker4"></p>
-        </div>
-
-<div class="small-2 columns text-center">
-        <img src="img/user.png"></img>
-        <p id="worker5"></p>
-        </div>
-
-<div class="small-2 columns text-center">
-        <img src="img/user.png"></img>
-        <p id="worker6"></p>
-        </div>
-	</div> 
-
+      <article id="domUserBidon">	
       </article> 
     </div>
  
@@ -99,6 +65,7 @@
 <!-- Code du demo !!! -->
 	<script>
 	var runInterval;
+	var nbWorker = 0;
 		<!-- Event de démarage des threads !!! -->
 		$( "#btnStart" ).click(function() {
 			//startWebWorker();
@@ -107,19 +74,32 @@
 		});
 
 		$("#btnStop").click(function() {
-			window.clearInterval(runInterval);
+			generateDomClientBidon();
+			//window.clearInterval(runInterval);
 		});
 
 		function generateDomClientBidon() {
-				
-
-
+		var domUsers = document.getElementById("domUserBidon");
+		// Ceci ajoute un row de users
 		for (var i = 0; i < 9; i++) {
-
-		
+			var row = document.createElement("div");
+		row.className="row";
+		for (var j = 0; j < 6; j++) {
+			nbWorker = nbWorker + 1;
+			var cls1 = document.createElement("div");
+			cls1.className="small-2 columns text-center";
+			row.appendChild(cls1);
+			var img = document.createElement("img");
+			img.src="img/user.png";
+			cls1.appendChild(img);
+			var p = document.createElement("p");
+			p.id ="worker" + nbWorker;
+			cls1.appendChild(p);
+		}
+		domUsers.appendChild(row);
 			}
 
-		}
+		};
 
 
 		function startEventedWebWorker(){
@@ -137,6 +117,9 @@
 			}, 5000);
 		};
 
+
+		// Exécuter la génération des DOM
+		generateDomClientBidon();
 	</script>
   </body>
 </html>
