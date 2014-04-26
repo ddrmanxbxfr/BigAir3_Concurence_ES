@@ -113,10 +113,22 @@
 		}
 		
 		$( "#btnStart" ).click(function() {
-			doWork();
+			startWebWorker();
 		});
 
-	</script
 
+	function startWebWorker() {
+		var worker = new Worker("worker.js");
+ 
+		// Watch for messages from the worker
+		worker.onmessage = function(e){
+		  // The message from the client:
+			  console.log('message from thread : ' + e.data);
+		};
+ 
+		worker.postMessage("start");
+		}
+
+	</script>
   </body>
 </html>
