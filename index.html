@@ -18,7 +18,7 @@
          <li><a id="btnStop" href="#" class="button">Arrêter</a></li>
 	</ul>
       </div>
-      <h1>Démo concurence <br /><small>Des recherches massives</small></h1>
+      <h1>BigR³ : Concurence recherche<br /><small>Des recherches massives avec le big data</small></h1>
       <hr />
     </div>
   </div>
@@ -31,7 +31,7 @@
   <div class="row">
  
     <!-- Main Blog Content -->
-    <div class="large-9 columns" role="content">
+    <div class="large-12 columns" role="content">
         <h3><a href="#">Liste des utilisateurs bidon</a></h3> 
       <article id="domUserBidon">	
       </article> 
@@ -72,6 +72,7 @@
 	<script>
 	var runInterval;
 	var nbWorker = 0;
+	var nbBonhomme = 9*12;
 		<!-- Event de démarage des threads !!! -->
 		$( "#btnStart" ).click(function() {
 			startEventedWebWorker();
@@ -87,10 +88,9 @@
 		for (var i = 0; i < 9; i++) {
 			var row = document.createElement("div");
 		row.className="row";
-		for (var j = 0; j < 6; j++) {
-			nbWorker = nbWorker + 1;
+		for (var j = 0; j < 12; j++) {
 			var cls1 = document.createElement("div");
-			cls1.className="small-2 columns text-center";
+			cls1.className="small-1 columns text-center";
 			var img = document.createElement("img");
 			img.src="img/user.png";
 			var p = document.createElement("p");
@@ -99,11 +99,12 @@
 			cls1.appendChild(img);
 			cls1.appendChild(p);
 			row.appendChild(cls1);
+			nbWorker = nbWorker + 1;
 
 		}
 		domUsers.appendChild(row);
 			}
-
+				nbWorker = 20; // BYPASS CHROME
 		};
 
 
@@ -134,10 +135,20 @@
 
 
 		//alert('nombre de workers : ' + workers.length);
-		for (var q= 0; q < nbWorker; q++) {
-			var item  = workers[q];
+		runInterval = setInterval(function() {
+		var qCpt = 0;
+		for (var q= 0; q < nbBonhomme; q++) {
+			var item  = workers[qCpt];
 			item.postMessage(q + ',http://cirq.codingrhemes.com:9200/_search');
+			
+			if (qCpt = 20)
+				qCpt = 0;
+			else
+				qCpt = qCpt + 1;
 			}
+		},2000);
+
+
 		}
 	</script>
   </body>
