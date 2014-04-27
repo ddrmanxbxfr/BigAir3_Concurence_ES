@@ -1,14 +1,14 @@
 self.addEventListener('message', function(e) {
 var strSplit = e.data.split(",");
 
-  fetch(strSplit[1], function(xhr) {	
+  fetch('http://cirq.codingrhemes.com:9200/_search', function(xhr) {	
 
 		var result = xhr.responseText;
 
 		//process the JSON
 
 		var object = JSON.parse(result);
-		var objectToReturn = strSplit[0] + "," + object.took;
+		var objectToReturn = strSplit[0] + "," + object.took + "," + strSplit[1];
 
 		//set a timeout just to add some latency
 		setTimeout(function() { sendback(); }, 500);

@@ -104,7 +104,7 @@
 		}
 		domUsers.appendChild(row);
 			}
-				nbWorker = 45; // BYPASS CHROME
+			nbWorker = 20;
 		};
 
 
@@ -123,27 +123,29 @@
 				noWorker = constW.concat(strSplit[0]);
 			 	var par = document.getElementById(noWorker);
 				par.innerHTML = strSplit[1] + "ms";
+				//console.log('redémarage pour user : ' + strSplit[0] + ' thread : ' + strSplit[2]);
+				demarerWork(strSplit[0], strSplit[2]);
 			}, false);
 			
 			workers.push(worker); // Ajoute le worker à l'array.
 		}
 
-
 		//alert('nombre de workers : ' + workers.length);
-		runInterval = setInterval(function() {
 		var qCpt = 0;
 		for (var q= 0; q < nbBonhomme; q++) {
-			var item  = workers[qCpt];
-			item.postMessage(q + ',http://cirq.codingrhemes.com:9200/_search');
-			
-			if (qCpt = nbWorker)
+		
+		console.log('starting user ' + q + ' on thread ' + qCpt);
+		
+			demarerWork(q,qCpt);
+			if (qCpt === nbWorker - 3)
 				qCpt = 0;
 			else
 				qCpt = qCpt + 1;
 			}
-		},1000);
+		}
 
-
+		function demarerWork(noUser, noWorker) {
+			workers[noWorker].postMessage(noUser + "," + noWorker);
 		}
 	</script>
   </body>
