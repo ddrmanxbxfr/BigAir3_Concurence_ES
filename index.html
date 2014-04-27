@@ -71,6 +71,7 @@
 <!-- Code du demo !!! -->
 	<script>
 	var runInterval;
+	var isRunning = false;
 	var nbWorker = 0;
 	var nbBonhomme = 9*12;
 		<!-- Event de démarage des threads !!! -->
@@ -79,7 +80,7 @@
 		});
 
 		$("#btnStop").click(function() {
-			window.clearInterval(runInterval);
+			isRunning = false;
 		});
 
 		function generateDomClientBidon() {
@@ -112,6 +113,7 @@
 		var workers = new Array();
 
 		function startEventedWebWorker(){
+		isRunning = true;
 		//HTML5 Web Workers
 		workers = new Array();
 		//dom.workers.maxPerDomain = 100; NOTE FONCTIONNE UNIQUEMENT DANS FIREFOX!!
@@ -124,7 +126,8 @@
 			 	var par = document.getElementById(noWorker);
 				par.innerHTML = strSplit[1] + "ms";
 				//console.log('redémarage pour user : ' + strSplit[0] + ' thread : ' + strSplit[2]);
-				demarerWork(strSplit[0], strSplit[2]);
+				if (isRunning)
+					demarerWork(strSplit[0], strSplit[2]);
 			}, false);
 			
 			workers.push(worker); // Ajoute le worker à l'array.
