@@ -1,4 +1,3 @@
-
 self.addEventListener('message', function(e) {
 var strSplit = e.data.split(",");
 
@@ -12,7 +11,7 @@ var strSplit = e.data.split(",");
 		var objectToReturn = strSplit[0] + "," + object.took;
 
 		//set a timeout just to add some latency
-		setTimeout(function() { sendback(); }, 1000);
+		setTimeout(function() { sendback(); }, 500);
 
 		//pass JSON object back as string
 		function sendback(){
@@ -106,9 +105,7 @@ var strSplit = e.data.split(",");
 		
 
 		xhr.open('GET', url, true);
-
+		//xhr.open('GET',url,false);
 		xhr.send('');
 
 	}
-
-

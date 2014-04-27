@@ -104,7 +104,7 @@
 		}
 		domUsers.appendChild(row);
 			}
-				nbWorker = 20; // BYPASS CHROME
+				nbWorker = 45; // BYPASS CHROME
 		};
 
 
@@ -126,11 +126,6 @@
 			}, false);
 			
 			workers.push(worker); // Ajoute le worker à l'array.
-
-			//runInterval = setInterval(function() {
-			//worker.postMessage('http://cirq.codingrhemes.com:9200/_search'); // Send filename to our worker.
-			//}, 5000);
-			//};
 		}
 
 
@@ -141,12 +136,12 @@
 			var item  = workers[qCpt];
 			item.postMessage(q + ',http://cirq.codingrhemes.com:9200/_search');
 			
-			if (qCpt = 20)
+			if (qCpt = nbWorker)
 				qCpt = 0;
 			else
 				qCpt = qCpt + 1;
 			}
-		},2000);
+		},1000);
 
 
 		}
