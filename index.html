@@ -15,7 +15,10 @@
       <div class="nav-bar right">
        <ul class="button-group">
          <li><a id="btnStart" href="#" class="button">Démarer les requêtes</a></li>
+         
          <li><a id="btnStop" href="#" class="button">Arrêter</a></li>
+         <br />
+         <a href="#" data-reveal-id="expliqueModal" class=" button">Explications du cas</a>
 	</ul>
       </div>
       <h1>BigR³ : Concurence recherche<br /><small>Des recherches massives avec le big data</small></h1>
@@ -39,6 +42,315 @@
  
     <!-- End Main Content --> 
   <!-- End Main Content and Sidebar -->
+ 
+ 
+ 
+ <!-- Modal explications -->
+ <!-- Reveal Modals begin -->
+<div id="expliqueModal" class="reveal-modal" data-reveal>
+  <h2>Une démo de performance avec le big data.</h2>
+  <p>Ce programme à pour but de réaliser démonstration de performance concernant la lecture à l'intérieur d'un environement big data. Chacune des photos de bonhomme représente un utilisateur. Lorsqu'on appuis sur Démarer, chacun des utilisateurs font des requêtes concurentielles de recherches sous l'ensemble des données. Le temps de réponse du big data est affiché en milli-secondes.Ceci représente une recherche massive avec tout l'actualité (20 site de nouvelles), wikipedia, ville de quebec, ville de montréal et Twitter.</p>
+  <p>L'ensemble du test est réalisé côté client avec des technologies de HTML5. Les web workers sont utilisés pour simuler un environement load balancé et s'occupe d'exécuter concurrentiellement les recherches des utilisateurs fictifs. La requête qui est lancé depuis le client est réalisé en http, car l'environement big data possède un API REST pour fournir le requêtage. Ceci évite d'avoir des pilotes à installer pour utiliser un environement de stockage de données.</p>
+  <p><a href="#" data-reveal-id="secondModal" class="secondary button">En SQL non big-data svp ?</a></p>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<div id="secondModal" class="reveal-modal" data-reveal>
+  <h2>La requête en SQL.</h2>
+  <p>Étant données les contraintes technologique présent à l'intérieur d'un SGBD. Il faudrait au préalable beaucoup de configuration pour obtenir une performance acceptable.</p></p>La même opération qui est lancé dans cet exemple pourrait être représenté par la requête suivante</p>
+  
+  <p> <code>select
+<br />bbc.author
+<br />,bbc.description
+<br />,bbc.feedname
+<br />,bbc.link
+<br />,bbc.publishedDate
+<br />,bbc.river
+<br />,bbc.title
+
+<br />,cnn.author
+<br />,cnn.description
+<br />,cnn.feedname
+<br />,cnn.link
+<br />,cnn.publishedDate
+<br />,cnn.river
+<br />,cnn.title
+
+<br />,lefigaro.author
+<br />,lefigaro.description
+<br />,lefigaro.feedname
+<br />,lefigaro.link
+<br />,lefigaro.publishedDate
+<br />,lefigaro.river
+<br />,lefigaro.title
+
+<br />,radiocanada.author
+<br />,radiocanada.description
+<br />,radiocanada.feedname
+<br />,radiocanada.link
+<br />,radiocanada.publishedDate
+<br />,radiocanada.river
+<br />,radiocanada.title
+
+<br />,tomhardware.author
+<br />,tomhardware.description
+<br />,tomhardware.feedname
+<br />,tomhardware.link
+<br />,tomhardware.publishedDate
+<br />,tomhardware.river
+<br />,tomhardware.title
+
+<br />,arc.author
+<br />,arc.description
+<br />,arc.feedname
+<br />,arc.link
+<br />,arc.publishedDate
+<br />,arc.river
+<br />,arc.title
+
+<br />,tweets.created_at
+<br />,tweets.hashtag.end
+<br />,tweets.hashtag.start
+<br />,tweets.hashtag.text
+<br />,tweets.in_reply.status
+<br />,tweets.in_reply.user_id
+<br />,tweets.in_reply.user_screen_name
+<br />,tweets.language
+<br />,tweets.link.display_url
+<br />,tweets.link.end
+<br />,tweets.link.expand_url
+<br />,tweets.link.start
+<br />,tweets.link.url
+<br />,tweets.location
+<br />,tweets.mention.end
+<br />,tweets.mention.id
+<br />,tweets.mention.name
+<br />,tweets.mention.screen_name
+<br />,tweets.mention.start
+<br />,tweets.place.country
+<br />,tweets.place.country_code
+<br />,tweets.place.full_name
+<br />,tweets.place.id
+<br />,tweets.place.name
+<br />,tweets.place.type
+<br />,tweets.place.url
+<br />,tweets.retweet.id
+<br />,tweets.retweet.retweet_count
+<br />,tweets.retweet.user_id
+<br />,tweets.retweet.user_screen_name
+<br />,tweets.retweet_count
+<br />,tweets.source
+<br />,tweets.text
+<br />,tweets.truncated
+<br />,tweets.user.description
+<br />,tweets.user.id
+<br />,tweets.user.location
+<br />,tweets.user.name
+<br />,tweets.user.profile_image_url
+<br />,tweets.user.profile_image_url_https
+<br />,tweets.user.screen_name
+
+<br />,arrondissement.Abreviation
+<br />,arrondissement.Code
+<br />,arrondissement.Geometrie
+<br />,arrondissement.Nom
+<br />,arrondissement.Perimetre
+<br />,arrondissement.Superficie
+<br />,arrondissement_mtl.ABREV
+<br />,arrondissement_mtl.AIRE
+<br />,arrondissement_mtl.CODEID
+<br />,arrondissement_mtl.CODEMAMROT
+<br />,arrondissement_mtl.MUNID
+<br />,arrondissement_mtl.NOM
+<br />,arrondissement_mtl.NUM
+<br />,arrondissement_mtl.PERIM
+<br />,arrondissement_mtl.TYPE
+<br />,contrats.DATE_CREATION
+<br />,contrats.DATE_FERMETURE
+<br />,contrats.DESCRIPTION_COMMANDE
+<br />,contrats.MONTANT_ACTUEL
+<br />,contrats.MONTANT_INITIAL
+<br />,contrats.NOM_FOURNISSEUR
+<br />,contrats.NUMERO_APPEL
+<br />,contrats.NUMERO_COMMANDE
+<br />,contrats_mtl.DATE SIGNATURE
+<br />,contrats_mtl.DESCRIPTION_COMMANDE
+<br />,contrats_mtl.DIRECTION
+<br />,contrats_mtl.FIELD10
+<br />,contrats_mtl.MONTANT_ACTUEL
+<br />,contrats_mtl.NOM_FOURNISSEUR
+<br />,contrats_mtl.NUMERO_COMMANDE
+<br />,contrats_mtl.NUMÉRO DÉCISION
+<br />,contrats_mtl.RÉPARTITION
+<br />,contrats_mtl.SERVICE
+<br />,quartiers.Geometrie
+<br />,quartiers.Nom
+<br />,quartiers.Perimetre
+<br />,quartiers.Superficie
+<br />,wikipedia.author<br/>
+,wikipedia.description<br />
+,wikipedia.feedname<br />
+,wikipedia.link<br />
+,wikipedia.publishedDate<br />
+,wikipedia.river<br />
+,wikipedia.title<br />
+
+from arc,
+  <br />   tomhardware,
+   <br />  radiocanada,
+     <br />cnn,
+   <br />  lefigaro,
+  <br />   bbc,
+  <br />   tweets,
+     <br />arrondissement,
+     <br />arrondissement,
+     <br />contrats,
+     <br />contrats_mtl,
+     <br />quartiers,
+     <br />wikipedia
+
+where
+
+bbc.author	like '%maRecherche%' OR <br />
+bbc.description like '%maRecherche%' OR <br />
+bbc.feedname like '%maRecherche%' OR <br />
+bbc.link like '%maRecherche%' OR <br />
+bbc.publishedDate like '%maRecherche%' OR <br />
+bbc.river like '%maRecherche%' OR <br />
+bbc.title like '%maRecherche%' OR <br />
+
+cnn.author like '%maRecherche%' OR <br />
+cnn.description like '%maRecherche%' OR <br />
+cnn.feedname like '%maRecherche%' OR <br />
+cnn.link like '%maRecherche%' OR <br />
+cnn.publishedDate like '%maRecherche%' OR <br />
+cnn.river like '%maRecherche%' OR <br />
+cnn.title like '%maRecherche%' OR <br />
+
+lefigaro.author like '%maRecherche%' OR <br />
+lefigaro.description like '%maRecherche%' OR <br />
+lefigaro.feedname like '%maRecherche%' OR <br />
+lefigaro.link like '%maRecherche%' OR <br />
+lefigaro.publishedDate like '%maRecherche%' OR <br />
+lefigaro.river like '%maRecherche%' OR <br />
+lefigaro.title like '%maRecherche%' OR <br />
+
+radiocanada.author like '%maRecherche%' OR <br />
+radiocanada.description like '%maRecherche%' OR <br />
+radiocanada.feedname like '%maRecherche%' OR <br />
+radiocanada.link like '%maRecherche%' OR <br />
+radiocanada.publishedDate like '%maRecherche%' OR <br />
+radiocanada.river like '%maRecherche%' OR <br />
+radiocanada.title like '%maRecherche%' OR <br />
+
+tomhardware.author like '%maRecherche%' OR <br />
+tomhardware.description like '%maRecherche%' OR <br />
+tomhardware.feedname like '%maRecherche%' OR <br />
+tomhardware.link like '%maRecherche%' OR <br />
+tomhardware.publishedDate like '%maRecherche%' OR <br />
+tomhardware.river like '%maRecherche%' OR <br />
+tomhardware.title like '%maRecherche%' OR <br />
+
+arc.author like '%maRecherche%' OR <br />
+arc.description like '%maRecherche%' OR <br />
+arc.feedname like '%maRecherche%' OR <br />
+arc.link like '%maRecherche%' OR <br />
+arc.publishedDate like '%maRecherche%' OR <br />
+arc.river like '%maRecherche%' OR <br />
+arc.title like '%maRecherche%' OR <br />
+
+wikipedia.author like '%maRecherche%' OR <br />
+wikipedia.description like '%maRecherche%' OR <br />
+wikipedia.feedname like '%maRecherche%' OR <br />
+wikipedia.link like '%maRecherche%' OR <br />
+wikipedia.publishedDate like '%maRecherche%' OR <br />
+wikipedia.river like '%maRecherche%' OR <br />
+wikipedia.title like '%maRecherche%' OR <br />
+
+tweets.created_at like '%maRecherche%' OR <br />
+tweets.hashtag.end like '%maRecherche%' OR <br />
+tweets.hashtag.start like '%maRecherche%' OR <br />
+tweets.hashtag.text like '%maRecherche%' OR <br />
+tweets.in_reply.status like '%maRecherche%' OR <br />
+tweets.in_reply.user_id like '%maRecherche%' OR <br />
+tweets.in_reply.user_screen_name like '%maRecherche%' OR <br />
+tweets.language like '%maRecherche%' OR <br />
+tweets.link.display_url like '%maRecherche%' OR <br />
+tweets.link.end like '%maRecherche%' OR <br />
+tweets.link.expand_url like '%maRecherche%' OR <br />
+tweets.link.start like '%maRecherche%' OR <br />
+tweets.link.url like '%maRecherche%' OR <br />
+tweets.location like '%maRecherche%' OR <br />
+tweets.mention.end like '%maRecherche%' OR <br />
+tweets.mention.id like '%maRecherche%' OR <br />
+tweets.mention.name like '%maRecherche%' OR <br />
+tweets.mention.screen_name like '%maRecherche%' OR <br />
+tweets.mention.start like '%maRecherche%' OR <br />
+tweets.place.country like '%maRecherche%' OR <br />
+tweets.place.country_code like '%maRecherche%' OR <br />
+tweets.place.full_name like '%maRecherche%' OR <br />
+tweets.place.id like '%maRecherche%' OR <br />
+tweets.place.name like '%maRecherche%' OR <br />
+tweets.place.type like '%maRecherche%' OR <br />
+tweets.place.url like '%maRecherche%' OR <br />
+tweets.retweet.id like '%maRecherche%' OR <br />
+tweets.retweet.retweet_count like '%maRecherche%' OR <br />
+tweets.retweet.user_id like '%maRecherche%' OR <br />
+tweets.retweet.user_screen_name like '%maRecherche%' OR <br />
+tweets.retweet_count like '%maRecherche%' OR <br />
+tweets.source like '%maRecherche%' OR <br />
+tweets.text like '%maRecherche%' OR <br />
+tweets.truncated like '%maRecherche%' OR <br />
+tweets.user.description like '%maRecherche%' OR <br />
+tweets.user.id like '%maRecherche%' OR <br />
+tweets.user.location like '%maRecherche%' OR <br />
+tweets.user.name like '%maRecherche%' OR <br />
+tweets.user.profile_image_url like '%maRecherche%' OR <br />
+tweets.user.profile_image_url_https like '%maRecherche%' OR <br />
+tweets.user.screen_name like '%maRecherche%' OR <br />
+
+arrondissement.Abreviation like '%maRecherche%' OR <br />
+arrondissement.Code like '%maRecherche%' OR <br />
+arrondissement.Geometrie like '%maRecherche%' OR <br />
+arrondissement.Nom like '%maRecherche%' OR <br />
+arrondissement.Perimetre like '%maRecherche%' OR <br />
+arrondissement.Superficie like '%maRecherche%' OR <br />
+arrondissement_mtl.ABREV like '%maRecherche%' OR <br />
+arrondissement_mtl.AIRE like '%maRecherche%' OR <br />
+arrondissement_mtl.CODEID like '%maRecherche%' OR <br />
+arrondissement_mtl.CODEMAMROT like '%maRecherche%' OR <br />
+arrondissement_mtl.MUNID like '%maRecherche%' OR <br />
+arrondissement_mtl.NOM like '%maRecherche%' OR <br />
+arrondissement_mtl.NUM like '%maRecherche%' OR <br />
+arrondissement_mtl.PERIM like '%maRecherche%' OR <br />
+arrondissement_mtl.TYPE like '%maRecherche%' OR <br />
+
+contrats.DATE_CREATION like '%maRecherche%' OR <br />
+contrats.DATE_FERMETURE like '%maRecherche%' OR <br />
+contrats.DESCRIPTION_COMMANDE like '%maRecherche%' OR <br />
+contrats.MONTANT_ACTUEL like '%maRecherche%' OR <br />
+contrats.MONTANT_INITIAL like '%maRecherche%' OR <br />
+contrats.NOM_FOURNISSEUR like '%maRecherche%' OR <br />
+contrats.NUMERO_APPEL like '%maRecherche%' OR <br />
+contrats.NUMERO_COMMANDE like '%maRecherche%' OR <br />
+
+contrats_mtl.DATE SIGNATURE like '%maRecherche%' OR <br />
+contrats_mtl.DESCRIPTION_COMMANDE like '%maRecherche%' OR <br />
+contrats_mtl.DIRECTION like '%maRecherche%' OR <br />
+contrats_mtl.FIELD10 like '%maRecherche%' OR <br />
+contrats_mtl.MONTANT_ACTUEL like '%maRecherche%' OR <br />
+contrats_mtl.NOM_FOURNISSEUR like '%maRecherche%' OR <br />
+contrats_mtl.NUMERO_COMMANDE like '%maRecherche%' OR <br />
+contrats_mtl.NUMÉRO DÉCISION like '%maRecherche%' OR <br />
+contrats_mtl.RÉPARTITION like '%maRecherche%' OR <br />
+contrats_mtl.SERVICE like '%maRecherche%' OR <br />
+
+quartiers.Geometrie like '%maRecherche%' OR <br />
+quartiers.Nom like '%maRecherche%' OR <br />
+quartiers.Perimetre like '%maRecherche%' OR <br />
+quartiers.Superficie like '%maRecherche%';</code></p>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
  
  
   <!-- Footer -->
