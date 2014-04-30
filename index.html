@@ -405,6 +405,7 @@ quartiers.Superficie like '%maRecherche%';</code></p>
 			var cls1 = document.createElement("div");
 			cls1.className="small-1 columns text-center";
 			var img = document.createElement("img");
+			img.id="imgWorker" + nbWorker;
 			img.src="img/user.png";
 			var p = document.createElement("p");
 			p.id ="worker" + nbWorker;
@@ -434,8 +435,14 @@ quartiers.Superficie like '%maRecherche%';</code></p>
 			worker.addEventListener('message', function(e) {
 				var strSplit = e.data.split(",");
 				var constW = "worker";
+				var constImg = "imgWorker";
+				var imgId;
 				noWorker = constW.concat(strSplit[0]);
-			 	var par = document.getElementById(noWorker);
+			 	imgId = constImg.concat(strSplit[0]);
+				var img = document.getElementById(imgId);
+				var rndNumber = Math.floor((Math.random()*198)+1);
+				img.src='img/' + rndNumber + '.jpeg';
+				var par = document.getElementById(noWorker);
 				par.innerHTML = strSplit[1] + "ms";
 				//console.log('redémarage pour user : ' + strSplit[0] + ' thread : ' + strSplit[2]);
 				if (isRunning)
