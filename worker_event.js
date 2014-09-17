@@ -1,111 +1,63 @@
-self.addEventListener('message', function(e) {
-var strSplit = e.data.split(",");
+self.addEventListener('message', function (e) {
+    var strSplit = e.data.split(",");
+    fetch('http://cirq.codingrhemes.com:9200/_search', function (xhr) {
 
-  fetch('http://cirq.codingrhemes.com:9200/_search', function(xhr) {	
+        var result = xhr.responseText;
 
-		var result = xhr.responseText;
+        //process the JSON
 
-		//process the JSON
+        var object = JSON.parse(result);
+        var objectToReturn = strSplit[0] + "," + object.took + "," + strSplit[1];
 
-		var object = JSON.parse(result);
-		var objectToReturn = strSplit[0] + "," + object.took + "," + strSplit[1];
+        //set a timeout just to add some latency
+        setTimeout(function () {
+            sendback();
+        }, 500);
 
-		//set a timeout just to add some latency
-		setTimeout(function() { sendback(); }, 500);
-
-		//pass JSON object back as string
-		function sendback(){
-			self.postMessage(objectToReturn);
-		}
-  });
+        //pass JSON object back as string
+        function sendback() {
+            self.postMessage(objectToReturn);
+        }
+    });
 }, false);
 
+//simple XHR request in pure raw JavaScript
+function fetch(url, callback) {
+    var xhr;
+    //console.log(url);
+    if (typeof XMLHttpRequest !== 'undefined') xhr = new XMLHttpRequest();
+    else {
+        var versions = ["MSXML2.XmlHttp.5.0",
+        "MSXML2.XmlHttp.4.0",
+           "MSXML2.XmlHttp.3.0",
+           "MSXML2.XmlHttp.2.0",
+        "Microsoft.XmlHttp"]
 
+        for (var i = 0, len = versions.length; i < len; i++) {
+            try {
+                xhr = new ActiveXObject(versions[i]);
+                break;
+            } catch (e) {}
+        } // end for
+    }
+    xhr.onreadystatechange = ensureReadiness;
 
+    function ensureReadiness() {
+        if (xhr.readyState < 4) {
+            return;
+        }
 
+        if (xhr.status !== 200) {
+            return;
+        }
 
-	//simple XHR request in pure raw JavaScript
+        // all is well
+        if (xhr.readyState === 4) {
+            callback(xhr);
+        }
+    }
 
-	function fetch(url, callback) {
-
-		var xhr;
-
-		
-
-		//console.log(url);
-
-
-
-		if(typeof XMLHttpRequest !== 'undefined') xhr = new XMLHttpRequest();
-
-		else {
-
-			var versions = ["MSXML2.XmlHttp.5.0", 
-
-			 				"MSXML2.XmlHttp.4.0",
-
-			 			    "MSXML2.XmlHttp.3.0", 
-
-			 			    "MSXML2.XmlHttp.2.0",
-
-			 				"Microsoft.XmlHttp"]
-
-
-
-			 for(var i = 0, len = versions.length; i < len; i++) {
-
-			 	try {
-
-			 		xhr = new ActiveXObject(versions[i]);
-
-			 		break;
-
-			 	}
-
-			 	catch(e){}
-
-			 } // end for
-
-		}
-
-		
-
-		xhr.onreadystatechange = ensureReadiness;
-
-		
-
-		function ensureReadiness() {
-
-			if(xhr.readyState < 4) {
-
-				return;
-
-			}
-
-			
-
-			if(xhr.status !== 200) {
-
-				return;
-
-			}
-
-
-
-			// all is well	
-
-			if(xhr.readyState === 4) {
-
-				callback(xhr);
-
-			}			
-
-		}
-
-		
-
-		xhr.open('GET', url, true);
-		//xhr.open('GET',url,false);
-		xhr.send('');
-
-	}
+    xhr.open('GET', url, true);
+    //xhr.open('GET',url,false);
+    xhr.send('');
+}
